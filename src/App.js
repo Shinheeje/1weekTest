@@ -1,25 +1,41 @@
-import logo from './logo.svg';
+import React, { useState } from 'react'
 import './App.css';
-
 function App() {
+  const [state, setState] = useState([])
+  const [title, setTitle] = useState('')
+
+  const inputTextHandler = (event) => {
+    setTitle(event.target.value)
+  }
+
+  const clickAddHandler = () => {
+    const newState = {
+      title: title
+    }
+
+    setState([...state, newState])
+    setTitle('')
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <div className='inputBox'>
+        <input value={title} onChange={inputTextHandler} />
+        <button onClick={clickAddHandler}>추가하기</button>
+      </div>
+      <h1>Todo List</h1>
+      <div className='contentWrap'>
+        {
+          state.map((item) => {
+            return (
+                <div className='content'>
+                  <p>{item.title}</p>
+                </div>
+            )
+          })
+        }
+      </div>
+    </>
+  )
 }
 
-export default App;
+export default App
